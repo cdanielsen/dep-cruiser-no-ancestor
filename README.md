@@ -1,0 +1,1 @@
+A minimal reproduction of a desired dependency graph rule with dependency-cruiser

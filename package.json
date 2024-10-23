@@ -1,0 +1,20 @@
+{
+  "name": "dep-cruiser-no-ancestor",
+  "version": "1.0.0",
+  "description": "A test scenario",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Not needed\"",
+    "cruise": "depcruise",
+    "cruise:root": "depcruise src/rootFolder"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/cdanielsen/dep-cruiser-no-ancestor.git"
+  },
+  "author": "Christian Danielsen",
+  "license": "MIT",
+  "devDependencies": {
+    "dependency-cruiser": "^16.4.2"
+  }
+}

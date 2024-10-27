@@ -26,12 +26,10 @@ This will flag all the imports as forbidden as the current config has empty obje
 
 
   error no-root-folder-ancestor: src/rootFolder/subFolder/sub-root.js → src/outside-root.js
-  error no-root-folder-ancestor: src/rootFolder/entryPoint.js → src/rootFolder/subFolder/sub-root.js
-  error no-root-folder-ancestor: src/rootFolder/entryPoint.js → src/rootFolder/inside-peer.js
 
-x 3 dependency violations (3 errors, 0 warnings). 4 modules, 3 dependencies cruised.
+x 1 dependency violations (1 errors, 0 warnings). 4 modules, 3 dependencies cruised.
 ```
 
 Desired Result:
 
-Modify the `from` and `to` rules in such a way that only the _first_ error is reported, as it is a file importing something from outside the root folder
+:check: Modify the `from` and `to` rules in such a way that only the _first_ error is reported, as it is a file importing something from outside the root folder

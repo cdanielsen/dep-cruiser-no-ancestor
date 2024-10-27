@@ -3,16 +3,51 @@ module.exports = {
   forbidden: [
     {
       name: "no-root-folder-ancestor",
+      /*
+       * The proposed rule below actually forbids/ detects all dependencies outside
+       * of the rootFolder folder - so a different name might be more appropriate, e.g.:
+       */
+      // name: "no-outside-root",
       comment:
         "Files cannot import files above the entrypoint containing folder",
       severity: "error",
       from: {
         // Ideally this would capture any files below the entrypoint containing folder
-        // path: ???
+        
+        /* For this _specific_ scenario, only mentioning the folder name directly
+         * would also work, but I guess the more generic solution is what you're
+         * after
+         */
+        // path: "^src/(rootFolder/).+" 
+
+        /* The more  generic solution is to use `[^/]+/` to match a folder (1 or 
+         * more characters that are not a /, followed by a /) and then any file 
+         * in that folder
+         */
+        path: "^src/([^/]+/).+"
       },
       to: {
-        // This would capture any paths that resolve to a destination above the entrypoint containing folder
-        // pathNot: ???
+        /* If the path in the to object is src/rootFolder, then this would match 
+         * any file that isn't in src/rootFolder (or a subfolder of it), so 
+         * both the root (e.g. src/outside-root.js) but also sibling folders 
+         * (e.g. src/otherRootFolder/sub/anyFile.js) which is probably what you need
+         * for your use case
+         * The $1 in the pathNot references  the capturing group in the
+         * path property (the ([^/]+/) part)
+         */
+        pathNot: "^src/$1",
+
+        /* Capturing only files in folder that are that are parents of src/rootFolder, 
+         * but not capturing any files in sibling folders _is_ possible, in that case
+         * you'd use:
+         */
+        // pathNot: "^src/([^/]+/).+"
+        
+        /* If it's about moving things around, it could be you're OK to keep 3rd 
+         * party dependencies ('node_modules') as well as node built-ins around. 
+         * To allow for that you'd want to add:
+         */
+        // dependencyTypesNot: ["npm", "core"]
       },
     },
   ],
